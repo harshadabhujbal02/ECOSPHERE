@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        {{ product['name'] }} | EcoSphere
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <span class="brand-leaf">🌱</span>
+
+        <div>
+            <div class="brand-name">EcoSphere</div>
+            <div class="brand-tagline">
+                Choose Green. Live Better.
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('products') }}">
+            Products
+        </a>
+
+        {% if session.get('user_id') %}
+
+            <a href="{{ url_for('recommendations') }}">
+                For You
+            </a>
+
+        {% endif %}
+
+        <a href="{{ url_for('cart') }}"
+           class="cart-link">
+            🛒 Cart
+        </a>
+
+        {% if session.get('user_id') %}
+
+            <span class="welcome-user">
+                👤 {{ session.get('user_name') }}
+            </span>
+
+            <a href="{{ url_for('logout') }}"
+               class="login-btn">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('login') }}"
+               class="login-btn">
+                Login
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<!-- ================= PRODUCT DETAILS ================= -->
+
+<section class="product-detail-page">
+
+    <div class="product-detail-container">
+
+
+        <!-- IMAGE -->
+
+        <div class="product-detail-image">
+
+            <img
+                src="{{ product['image'] }}"
+                alt="{{ product['name'] }}"
+            >
+
+        </div>
+
+
+        <!-- INFORMATION -->
+
+        <div class="product-detail-info">
+
+            <p class="product-category">
+                {{ product['category'] }}
+            </p>
+
+            <h1>
+                {{ product['name'] }}
+            </h1>
+
+            <p class="product-detail-description">
+                {{ product['description'] }}
+            </p>
+
+
+            <div class="detail-price">
+
+                ₹{{ "%.2f"|format(product['price']) }}
+
+            </div>
+
+
+            <!-- ECOSCORE -->
+
+            <div class="eco-score-card">
+
+                <p>
+                    ECO SCORE
+                </p>
+
+                <strong>
+                    {{ product['ecoscore'] }}/100
+                </strong>
+
+                <span>
+                    Excellent sustainable choice
+                </span>
+
+            </div>
+
+
+            <!-- ADD TO CART -->
+
+            <a
+                href="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                class="checkout-btn"
+            >
+                🛒 Add to Cart
+            </a>
+
+
+            <!-- BREAKDOWN -->
+
+            <div class="eco-breakdown">
+
+                <h2>
+                    EcoScore Breakdown
+                </h2>
+
+
+                <div class="eco-factor">
+
+                    <div>
+                        <span>Material</span>
+                        <strong>
+                            {{ product['material_score'] }}/100
+                        </strong>
+                    </div>
+
+                    <progress
+                        class="eco-progress-bar"
+                        value="{{ product['material_score'] }}"
+                        max="100">
+                    </progress>
+
+                </div>
+
+
+                <div class="eco-factor">
+
+                    <div>
+                        <span>Recyclability</span>
+                        <strong>
+                            {{ product['recyclability_score'] }}/100
+                        </strong>
+                    </div>
+
+                    <progress
+                        class="eco-progress-bar"
+                        value="{{ product['recyclability_score'] }}"
+                        max="100">
+                    </progress>
+
+                </div>
+
+
+                <div class="eco-factor">
+
+                    <div>
+                        <span>Reusability</span>
+                        <strong>
+                            {{ product['reusability_score'] }}/100
+                        </strong>
+                    </div>
+
+                    <progress
+                        class="eco-progress-bar"
+                        value="{{ product['reusability_score'] }}"
+                        max="100">
+                    </progress>
+
+                </div>
+
+
+                <div class="eco-factor">
+
+                    <div>
+                        <span>Packaging</span>
+                        <strong>
+                            {{ product['packaging_score'] }}/100
+                        </strong>
+                    </div>
+
+                    <progress
+                        class="eco-progress-bar"
+                        value="{{ product['packaging_score'] }}"
+                        max="100">
+                    </progress>
+
+                </div>
+
+
+                <div class="eco-factor">
+
+                    <div>
+                        <span>Transport</span>
+                        <strong>
+                            {{ product['transport_score'] }}/100
+                        </strong>
+                    </div>
+
+                    <progress
+                        class="eco-progress-bar"
+                        value="{{ product['transport_score'] }}"
+                        max="100">
+                    </progress>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</body>
+</html>

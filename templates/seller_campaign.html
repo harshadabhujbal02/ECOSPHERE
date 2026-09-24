@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Marketing Campaign | EcoSphere
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <span class="brand-leaf">
+            🌱
+        </span>
+
+        <div>
+
+            <div class="brand-name">
+                EcoSphere
+            </div>
+
+            <div class="brand-tagline">
+                Digital Marketing
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('seller_dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('products') }}">
+            Products
+        </a>
+
+        <a href="{{ url_for('logout') }}"
+           class="login-btn">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<section class="seller-page">
+
+    <div class="seller-container">
+
+        <p class="section-label">
+            DIGITAL MARKETING TOOL
+        </p>
+
+        <h1>
+            Create Marketing Campaign
+        </h1>
+
+        <p>
+            Generate ready-to-use promotional content
+            for your sustainable products.
+        </p>
+
+
+        {% if error %}
+
+            <div class="form-error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <div class="campaign-form-card">
+
+            <form method="POST">
+
+                <label>
+                    Select Product
+                </label>
+
+                <select name="product_id"
+                        required>
+
+                    <option value="">
+                        Select a product
+                    </option>
+
+                    {% for product in products %}
+
+                        <option value="{{ product['id'] }}">
+                            {{ product['name'] }}
+                            — EcoScore {{ product['ecoscore'] }}
+                        </option>
+
+                    {% endfor %}
+
+                </select>
+
+
+                <label>
+                    Marketing Platform
+                </label>
+
+                <select name="platform"
+                        required>
+
+                    <option value="">
+                        Select platform
+                    </option>
+
+                    <option value="Instagram">
+                        Instagram
+                    </option>
+
+                    <option value="Facebook">
+                        Facebook
+                    </option>
+
+                    <option value="LinkedIn">
+                        LinkedIn
+                    </option>
+
+                </select>
+
+
+                <label>
+                    Marketing Goal
+                </label>
+
+                <select name="marketing_goal"
+                        required>
+
+                    <option value="">
+                        Select marketing goal
+                    </option>
+
+                    <option value="Brand Awareness">
+                        Brand Awareness
+                    </option>
+
+                    <option value="Product Promotion">
+                        Product Promotion
+                    </option>
+
+                    <option value="Sales">
+                        Increase Sales
+                    </option>
+
+                </select>
+
+
+                <button
+                    type="submit"
+                    class="checkout-btn"
+                >
+                    Generate Campaign
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</body>
+</html>

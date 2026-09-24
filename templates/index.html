@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="EcoSphere — discover sustainable products, green campaigns and conscious shopping. Choose Green. Live Better.">
+    <title>EcoSphere | Sustainable Marketplace</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body class="home-page">
+
+<!-- ================= NAVBAR ================= -->
+<nav class="navbar home-navbar">
+    <a href="{{ url_for('home') }}" class="brand brand-link">
+        <span class="brand-mark">🌱</span>
+        <span>
+            <span class="brand-name">EcoSphere</span>
+            <span class="brand-tagline">Choose Green. Live Better.</span>
+        </span>
+    </a>
+
+    <div class="nav-links home-nav-links">
+        <a class="active" href="{{ url_for('home') }}">Home</a>
+        <a href="{{ url_for('products') }}">Products</a>
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('recommendations') }}">For You</a>
+        {% endif %}
+        <a href="#campaigns">Social Hub</a>
+        <a href="#impact">Marketing</a>
+        <a href="{{ url_for('cart') }}" class="home-cart">🛒 <span>Cart</span></a>
+
+        {% if session.get('user_id') %}
+            <span class="welcome-user home-user">👤 {{ session.get('user_name') }}</span>
+            <a href="{{ url_for('logout') }}" class="login-btn">Logout</a>
+        {% else %}
+            <a href="{{ url_for('login') }}" class="login-btn">Login</a>
+        {% endif %}
+    </div>
+</nav>
+
+<!-- ================= HERO ================= -->
+<section class="premium-hero">
+    <div class="hero-copy">
+        <p class="hero-eyebrow">SUSTAINABLE LIVING <span>•</span> DIGITAL COMMUNITY</p>
+
+        <h1>Shop Better.<br><em>Live Greener.</em></h1>
+
+        <p class="hero-description">
+            Discover sustainable products, follow green campaigns and see how
+            digital marketing can turn conscious choices into meaningful community action.
+        </p>
+
+        <div class="hero-actions">
+            <a href="{{ url_for('products') }}" class="primary-cta">Explore Products <span>→</span></a>
+            <a href="#campaigns" class="secondary-cta">Explore Social Hub</a>
+        </div>
+
+        <div class="hero-metrics">
+            <div><strong>10K+</strong><span>Eco Products</span></div>
+            <div><strong>25K+</strong><span>Community</span></div>
+            <div><strong>95%</strong><span>Positive Impact</span></div>
+        </div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="hero-glow"></div>
+        <div class="hero-orbit orbit-one"></div>
+        <div class="hero-orbit orbit-two"></div>
+
+        <div class="hero-photo-card">
+            <img src="https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=1000&q=88" alt="Sustainable lifestyle products">
+            <div class="hero-photo-overlay">
+                <span>🌿 EcoSphere</span>
+                <strong>Small choices.<br>Big impact.</strong>
+                <small>#GreenLiving</small>
+            </div>
+        </div>
+
+        <div class="engagement-card">
+            <span>📈</span>
+            <div><strong>+27%</strong><small>engagement</small></div>
+        </div>
+
+        <div class="ecoscore-floating">♻️ EcoScore <strong>95/100</strong></div>
+        <div class="social-float social-heart">♥</div>
+        <div class="social-float social-share">↗</div>
+    </div>
+</section>
+
+<!-- ================= TRENDING PRODUCTS ================= -->
+<section class="home-section products-showcase" id="products-showcase">
+    <div class="section-topline">
+        <div>
+            <p class="section-label">CURATED FOR YOU</p>
+            <h2>Trending Sustainable Products</h2>
+            <p>Eco-friendly choices for a brighter tomorrow.</p>
+        </div>
+        <a href="{{ url_for('products') }}" class="view-all-link">View All <span>→</span></a>
+    </div>
+
+    <div class="premium-product-grid">
+        {% for product in products[:5] %}
+        <article class="premium-product-card">
+            <div class="premium-product-image">
+                <img src="{{ product['image'] }}" alt="{{ product['name'] }}">
+                <span class="premium-eco-badge">♻ EcoScore {{ product['ecoscore'] }}</span>
+                <span class="heart-badge">♡</span>
+            </div>
+
+            <div class="premium-product-content">
+                <span class="premium-category">{{ product['category'] }}</span>
+                <h3>{{ product['name'] }}</h3>
+                <div class="rating-row">
+                    <span class="stars">★</span>
+                    <strong>{{ '%.1f'|format(4.6 + (product['ecoscore'] % 4) / 10) }}</strong>
+                    <span>({{ 600 + product['id'] * 137 }})</span>
+                </div>
+                <div class="price-row">
+                    <strong>₹{{ '%.0f'|format(product['price']) }}</strong>
+                    <span class="old-price">₹{{ '%.0f'|format(product['price'] * 1.25) }}</span>
+                    <span class="discount">{{ 20 + (product['id'] % 4) * 5 }}% OFF</span>
+                </div>
+                <div class="home-product-actions"><a href="{{ url_for('product_details', product_id=product['id']) }}" class="premium-details-btn">View Details</a><a href="{{ url_for('add_to_cart', product_id=product['id']) }}" class="premium-cart-btn">🛒 Add to Cart</a></div>
+            </div>
+        </article>
+        {% endfor %}
+    </div>
+</section>
+
+<!-- ================= IMPACT / MARKETING ================= -->
+<section class="impact-section" id="impact">
+    <div class="impact-inner">
+        <div class="why-ecosphere">
+            <p class="section-label">WHY ECOSPHERE?</p>
+            <h2>More than a store —<br>a movement.</h2>
+            <p class="impact-copy">Make better purchases, discover meaningful campaigns and share sustainable ideas with a growing digital community.</p>
+
+            <div class="impact-stats">
+                <div class="impact-stat">
+                    <span class="stat-icon">🌿</span>
+                    <div><strong>10K+</strong><small>Eco Products</small><em>Sustainable choices, always.</em></div>
+                </div>
+                <div class="impact-stat">
+                    <span class="stat-icon">👥</span>
+                    <div><strong>25K+</strong><small>Community</small><em>Growing a greener tomorrow.</em></div>
+                </div>
+                <div class="impact-stat">
+                    <span class="stat-icon">🌍</span>
+                    <div><strong>95%</strong><small>Positive Impact</small><em>Real change, together.</em></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="trending-campaigns" id="campaigns">
+            <p class="section-label">WHAT'S TRENDING</p>
+            <h3>Join the conversation. Be the change.</h3>
+            <div class="campaign-grid">
+                <div class="campaign-tile campaign-one">
+                    <div class="campaign-image"></div>
+                    <strong>#GreenLiving</strong>
+                    <span>♥ 12.4K &nbsp; ○ 2.1K &nbsp; ↗ 1.2K</span>
+                </div>
+                <div class="campaign-tile campaign-two">
+                    <div class="campaign-image"></div>
+                    <strong>#PlasticFree</strong>
+                    <span>♥ 8.7K &nbsp; ○ 1.4K &nbsp; ↗ 980</span>
+                </div>
+                <div class="campaign-tile campaign-three">
+                    <div class="campaign-image"></div>
+                    <strong>#EcoChallenge</strong>
+                    <span>♥ 6.3K &nbsp; ○ 980 &nbsp; ↗ 630</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ================= CTA ================= -->
+<section class="final-cta">
+    <div>
+        <p class="section-label">MAKE YOUR CHOICE COUNT</p>
+        <h2>Your choices shape the future.</h2>
+        <p>Shop sustainably. Share consciously. Live greener.</p>
+    </div>
+    <a href="{{ url_for('products') }}" class="light-cta">Start Shopping <span>→</span></a>
+</section>
+
+<!-- ================= FOOTER ================= -->
+<footer class="footer home-footer">
+    <div class="footer-brand">
+        <span class="brand-mark">🌱</span>
+        <div><div class="brand-name">EcoSphere</div><div class="brand-tagline">Choose Green. Live Better.</div></div>
+    </div>
+    <p>© 2026 EcoSphere. Sustainable choices for a better future.</p>
+</footer>
+
+</body>
+</html>
