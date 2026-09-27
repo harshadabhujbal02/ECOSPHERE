@@ -1387,6 +1387,10 @@ init_db()
 # APPLICATION START
 # ============================================================
 
+@app.route("/blog/googlefd0039532ba541a.html")
+def google_verification():
+    return "google-site-verification: googlefd0039532ba541a.html"
+
 if __name__ == "__main__":
 
     app.run(
