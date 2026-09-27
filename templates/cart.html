@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Shopping Cart | EcoSphere</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <span class="brand-leaf">🌱</span>
+
+        <div>
+            <div class="brand-name">EcoSphere</div>
+            <div class="brand-tagline">
+                Choose Green. Live Better.
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('products') }}">
+            Products
+        </a>
+
+        {% if session.get('user_id') %}
+
+            <a href="{{ url_for('recommendations') }}">
+                For You
+            </a>
+
+        {% endif %}
+
+        <a href="{{ url_for('cart') }}"
+           class="cart-link">
+            🛒 Cart
+        </a>
+
+        {% if session.get('user_id') %}
+
+            <span class="welcome-user">
+                👤 {{ session.get('user_name') }}
+            </span>
+
+            <a href="{{ url_for('logout') }}"
+               class="login-btn">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('login') }}"
+               class="login-btn">
+                Login
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<!-- ================= CART ================= -->
+
+<section class="cart-page">
+
+    <div class="cart-container">
+
+        <p class="section-label">
+            YOUR SHOPPING CART
+        </p>
+
+        <h1>
+            Your Cart
+        </h1>
+
+
+        {% if cart_items %}
+
+            <div class="cart-layout">
+
+                <!-- CART ITEMS -->
+
+                <div class="cart-items">
+
+                    {% for item in cart_items %}
+
+                    <div class="cart-item">
+
+                        <img
+                            src="{{ item['product']['image'] }}"
+                            alt="{{ item['product']['name'] }}"
+                            class="cart-item-image"
+                        >
+
+
+                        <div class="cart-item-info">
+
+                            <p class="product-category">
+                                {{ item['product']['category'] }}
+                            </p>
+
+                            <h3>
+                                {{ item['product']['name'] }}
+                            </h3>
+
+                            <p>
+                                ₹{{ "%.2f"|format(item['product']['price']) }}
+                            </p>
+
+
+                            <div class="quantity-controls">
+
+                                <a href="{{ url_for('decrease', product_id=item['product']['id']) }}">
+                                    −
+                                </a>
+
+                                <span>
+                                    {{ item['quantity'] }}
+                                </span>
+
+                                <a href="{{ url_for('increase', product_id=item['product']['id']) }}">
+                                    +
+                                </a>
+
+                            </div>
+
+
+                            <a
+                                href="{{ url_for('remove', product_id=item['product']['id']) }}"
+                                class="remove-cart-btn"
+                            >
+                                Remove
+                            </a>
+
+                        </div>
+
+
+                        <div class="cart-item-total">
+
+                            ₹{{ "%.2f"|format(item['subtotal']) }}
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                </div>
+
+
+                <!-- SUMMARY -->
+
+                <div class="cart-summary">
+
+                    <h2>
+                        Order Summary
+                    </h2>
+
+                    <div class="summary-row">
+
+                        <span>
+                            Total
+                        </span>
+
+                        <strong>
+                            ₹{{ "%.2f"|format(total) }}
+                        </strong>
+
+                    </div>
+
+
+                    <a
+                        href="{{ url_for('checkout') }}"
+                        class="checkout-btn"
+                    >
+                        Proceed to Checkout
+                    </a>
+
+
+                    <a
+                        href="{{ url_for('clear_cart') }}"
+                        class="clear-cart-btn"
+                    >
+                        Clear Cart
+                    </a>
+
+                </div>
+
+            </div>
+
+        {% else %}
+
+            <div class="empty-cart">
+
+                <div class="empty-cart-icon">
+                    🛒
+                </div>
+
+                <h2>
+                    Your cart is empty
+                </h2>
+
+                <p>
+                    Start exploring sustainable products.
+                </p>
+
+                <a
+                    href="{{ url_for('products') }}"
+                    class="hero-btn"
+                >
+                    Explore Products
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+</body>
+</html>

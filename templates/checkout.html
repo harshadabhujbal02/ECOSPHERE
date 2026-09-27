@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Checkout | EcoSphere</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <span class="brand-leaf">🌱</span>
+
+        <div>
+            <div class="brand-name">EcoSphere</div>
+            <div class="brand-tagline">
+                Choose Green. Live Better.
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('products') }}">Products</a>
+
+        <a href="{{ url_for('cart') }}">
+            🛒 Cart
+        </a>
+
+        {% if session.get('user_id') %}
+
+            <span class="welcome-user">
+                👤 {{ session.get('user_name') }}
+            </span>
+
+            <a href="{{ url_for('logout') }}"
+               class="login-btn">
+                Logout
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<section class="checkout-page">
+
+    <div class="checkout-container">
+
+        <div class="checkout-form-section">
+
+            <p class="section-label">
+                CHECKOUT
+            </p>
+
+            <h1>
+                Complete Your Order
+            </h1>
+
+
+            {% if error %}
+
+                <div class="form-error">
+                    {{ error }}
+                </div>
+
+            {% endif %}
+
+
+            <form method="POST">
+
+                <label>
+                    Full Name
+                </label>
+
+                <input
+                    type="text"
+                    name="customer_name"
+                    required
+                >
+
+
+                <label>
+                    Email
+                </label>
+
+                <input
+                    type="email"
+                    name="customer_email"
+                    value="{{ session.get('user_email', '') }}"
+                    required
+                >
+
+
+                <label>
+                    Address
+                </label>
+
+                <textarea
+                    name="address"
+                    rows="4"
+                    required
+                ></textarea>
+
+
+                <label>
+                    City
+                </label>
+
+                <input
+                    type="text"
+                    name="city"
+                    required
+                >
+
+
+                <label>
+                    Pincode
+                </label>
+
+                <input
+                    type="text"
+                    name="pincode"
+                    required
+                >
+
+
+                <label>
+                    Payment Method
+                </label>
+
+                <select name="payment_method" required>
+
+                    <option value="">
+                        Select Payment Method
+                    </option>
+
+                    <option value="Cash on Delivery">
+                        Cash on Delivery
+                    </option>
+
+                    <option value="UPI">
+                        UPI
+                    </option>
+
+                    <option value="Card">
+                        Card
+                    </option>
+
+                </select>
+
+
+                <button
+                    type="submit"
+                    class="checkout-btn"
+                >
+                    Place Order
+                </button>
+
+            </form>
+
+        </div>
+
+
+        <div class="checkout-summary">
+
+            <h2>
+                Order Summary
+            </h2>
+
+            {% for item in cart_products %}
+
+                <div class="summary-product">
+
+                    <span>
+                        {{ item['product']['name'] }}
+                        × {{ item['quantity'] }}
+                    </span>
+
+                    <strong>
+                        ₹{{ "%.2f"|format(item['subtotal']) }}
+                    </strong>
+
+                </div>
+
+            {% endfor %}
+
+
+            <div class="summary-row">
+
+                <span>
+                    Total
+                </span>
+
+                <strong>
+                    ₹{{ "%.2f"|format(total) }}
+                </strong>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</body>
+</html>

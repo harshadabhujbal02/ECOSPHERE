@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>My Orders | EcoSphere</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <span class="brand-leaf">🌱</span>
+
+        <div>
+            <div class="brand-name">EcoSphere</div>
+            <div class="brand-tagline">
+                Choose Green. Live Better.
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('products') }}">
+            Products
+        </a>
+
+        <a href="{{ url_for('cart') }}">
+            🛒 Cart
+        </a>
+
+        <span class="welcome-user">
+            👤 {{ session.get('user_name') }}
+        </span>
+
+        <a href="{{ url_for('logout') }}"
+           class="login-btn">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<section class="orders-page">
+
+    <div class="orders-container">
+
+        <p class="section-label">
+            ORDER HISTORY
+        </p>
+
+        <h1 class="orders-heading">
+            My Orders
+        </h1>
+
+
+        {% if orders %}
+
+            <div class="orders-list">
+
+                {% for order in orders %}
+
+                <div class="order-card">
+
+                    <div class="order-card-header">
+
+                        <div>
+
+                            <span class="orders-label">
+                                ORDER
+                            </span>
+
+                            <h3>
+                                #{{ order['id'] }}
+                            </h3>
+
+                        </div>
+
+                        <span class="order-status">
+                            {{ order['status'] }}
+                        </span>
+
+                    </div>
+
+
+                    <div class="order-card-body">
+
+                        <div class="order-detail">
+
+                            <span>
+                                Customer
+                            </span>
+
+                            <strong>
+                                {{ order['customer_name'] }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="order-detail">
+
+                            <span>
+                                Date
+                            </span>
+
+                            <strong>
+                                {{ order['order_date'] }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="order-detail">
+
+                            <span>
+                                Payment
+                            </span>
+
+                            <strong>
+                                {{ order['payment_method'] }}
+                            </strong>
+
+                        </div>
+
+
+                        <div class="order-detail">
+
+                            <span>
+                                Total
+                            </span>
+
+                            <strong class="order-total">
+                                ₹{{ "%.2f"|format(order['total_amount']) }}
+                            </strong>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="order-address">
+
+                        <strong>
+                            Delivery Address
+                        </strong>
+
+                        <p>
+                            {{ order['address'] }},
+                            {{ order['city'] }} -
+                            {{ order['pincode'] }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        {% else %}
+
+            <div class="no-orders">
+
+                <h2>
+                    No orders yet
+                </h2>
+
+                <p>
+                    Your completed orders will appear here.
+                </p>
+
+                <a
+                    href="{{ url_for('products') }}"
+                    class="hero-btn"
+                >
+                    Start Shopping
+                </a>
+
+            </div>
+
+        {% endif %}
+
+    </div>
+
+</section>
+
+
+</body>
+</html>

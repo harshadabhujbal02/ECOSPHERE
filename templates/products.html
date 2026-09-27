@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>EcoSphere | Products</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+          rel="stylesheet">
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     NAVBAR
+===================================================== -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <div class="brand-leaf">
+            🌿
+        </div>
+
+        <div>
+
+            <div class="brand-name">
+                EcoSphere
+            </div>
+
+            <div class="brand-tagline">
+                Shop Green. Live Green. Make an Impact.
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('products') }}"
+           class="active">
+            Products
+        </a>
+
+        <a href="{{ url_for('recommendations') }}">
+            For You
+        </a>
+
+        <a href="{{ url_for('home') }}#about">
+            About
+        </a>
+
+        <a href="{{ url_for('cart') }}">
+            🛒 Cart
+        </a>
+
+        {% if session.get('user_id') %}
+
+            <span class="welcome-user">
+                👤 {{ session.get('user_name') }}
+            </span>
+
+            <a href="{{ url_for('logout') }}"
+               class="login-btn">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('login') }}"
+               class="login-btn">
+                Login
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     PRODUCTS HERO
+===================================================== -->
+
+<section class="products-hero">
+
+    <span>
+        🌿 SUSTAINABLE MARKETPLACE
+    </span>
+
+    <h1>
+        Sustainable Products
+    </h1>
+
+    <p>
+        Choose products that are better for you
+        and better for the planet.
+    </p>
+
+    <form class="large-search"
+          method="GET"
+          action="{{ url_for('products') }}">
+
+        <span>
+            🔍
+        </span>
+
+        <input
+            type="text"
+            name="search"
+            value="{{ search }}"
+            placeholder="Search bamboo, reusable, organic..."
+        >
+
+        <button type="submit">
+            Search
+        </button>
+
+    </form>
+
+</section>
+
+
+<!-- =====================================================
+     CATEGORY FILTER
+===================================================== -->
+
+<section class="filter-section">
+
+    <div class="filter-title">
+        Browse Categories
+    </div>
+
+    <div class="filter-buttons">
+
+        <a href="{{ url_for('products') }}"
+           class="{% if not selected_category %}selected{% endif %}">
+            All Products
+        </a>
+
+        {% for category in categories %}
+
+            <a
+                href="{{ url_for('products', category=category) }}"
+                class="{% if selected_category == category %}selected{% endif %}"
+            >
+                {{ category }}
+            </a>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- =====================================================
+     PRODUCTS
+===================================================== -->
+
+<section class="products-page">
+
+    {% if products %}
+
+        <div class="product-grid">
+
+            {% for product in products %}
+
+                <div class="product-card">
+
+                    <div class="product-image">
+
+                        <img
+                            src="{{ product['image'] }}"
+                            alt="{{ product['name'] }}"
+                        >
+
+                        <span class="product-category">
+                            {{ product['category'] }}
+                        </span>
+
+                        <button
+                            class="wishlist"
+                            type="button"
+                        >
+                            ♡
+                        </button>
+
+                    </div>
+
+
+                    <div class="product-details">
+
+                        <h3>
+                            {{ product['name'] }}
+                        </h3>
+
+                        <p class="product-description">
+                            {{ product['description'] }}
+                        </p>
+
+                        <div class="eco-score">
+
+                            🌿 EcoScore
+
+                            <strong>
+                                {{ product['ecoscore'] }}/100
+                            </strong>
+
+                        </div>
+
+
+                        <div class="product-footer product-actions">
+
+                            <strong class="product-price">
+                                ₹{{ product['price']|int }}
+                            </strong>
+
+
+                            <!-- ADD TO CART -->
+
+                            <form
+                                action="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                                method="POST"
+                                class="add-cart-form"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="add-cart"
+                                >
+                                    🛒 Add to Cart
+                                </button>
+
+                            </form>
+
+
+                            <!-- VIEW DETAILS -->
+
+                            <a
+                                href="{{ url_for('product_details', product_id=product['id']) }}"
+                                class="view-details-btn"
+                            >
+                                View Details
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            {% endfor %}
+
+        </div>
+
+    {% else %}
+
+        <div class="no-results">
+
+            <div>
+                🔍
+            </div>
+
+            <h2>
+                No products found
+            </h2>
+
+            <p>
+                Try another product name or category.
+            </p>
+
+            <a href="{{ url_for('products') }}">
+                View All Products
+            </a>
+
+        </div>
+
+    {% endif %}
+
+</section>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer class="footer">
+
+    <div class="footer-brand">
+        🌿 <strong>EcoSphere</strong>
+    </div>
+
+    <p>
+        Shop Green. Live Green. Make an Impact.
+    </p>
+
+    <div class="footer-social">
+        f &nbsp; ◎ &nbsp; ▶ &nbsp; 𝕏
+    </div>
+
+    <p class="copyright">
+        © 2026 EcoSphere. All Rights Reserved.
+    </p>
+
+</footer>
+
+</body>
+</html>

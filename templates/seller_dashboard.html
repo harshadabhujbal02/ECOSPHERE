@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Seller Dashboard | EcoSphere</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <span class="brand-leaf">
+            🌱
+        </span>
+
+        <div>
+
+            <div class="brand-name">
+                EcoSphere
+            </div>
+
+            <div class="brand-tagline">
+                Seller Dashboard
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}">
+            Home
+        </a>
+
+        <a href="{{ url_for('products') }}">
+            Products
+        </a>
+
+        <a href="{{ url_for('seller_dashboard') }}">
+            Dashboard
+        </a>
+
+        <a href="{{ url_for('seller_campaign') }}">
+            Marketing
+        </a>
+
+        <a href="{{ url_for('logout') }}"
+           class="login-btn">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<section class="seller-page">
+
+    <div class="seller-container">
+
+        <p class="section-label">
+            SELLER CENTER
+        </p>
+
+        <h1>
+            Welcome, {{ seller['name'] }}
+        </h1>
+
+        <p>
+            Manage your sustainable products and create
+            digital marketing campaigns.
+        </p>
+
+
+        <!-- ================= QUICK ACTIONS ================= -->
+
+        <div class="seller-actions">
+
+            <a
+                href="{{ url_for('seller_campaign') }}"
+                class="seller-action-card"
+            >
+
+                <span>
+                    📢
+                </span>
+
+                <h3>
+                    Create Campaign
+                </h3>
+
+                <p>
+                    Generate social media marketing content.
+                </p>
+
+            </a>
+
+
+            <a
+                href="{{ url_for('products') }}"
+                class="seller-action-card"
+            >
+
+                <span>
+                    🛍️
+                </span>
+
+                <h3>
+                    View Marketplace
+                </h3>
+
+                <p>
+                    See your products in the marketplace.
+                </p>
+
+            </a>
+
+        </div>
+
+
+        <!-- ================= PRODUCTS ================= -->
+
+        <div class="seller-section">
+
+            <h2>
+                Available Products
+            </h2>
+
+            <div class="seller-product-list">
+
+                {% for product in products %}
+
+                <div class="seller-product">
+
+                    <img
+                        src="{{ product['image'] }}"
+                        alt="{{ product['name'] }}"
+                    >
+
+                    <div>
+
+                        <h3>
+                            {{ product['name'] }}
+                        </h3>
+
+                        <p>
+                            {{ product['category'] }}
+                        </p>
+
+                    </div>
+
+                    <strong>
+                        EcoScore {{ product['ecoscore'] }}
+                    </strong>
+
+                </div>
+
+                {% endfor %}
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= CAMPAIGNS ================= -->
+
+        <div class="seller-section">
+
+            <div class="seller-section-heading">
+
+                <h2>
+                    My Marketing Campaigns
+                </h2>
+
+                <a
+                    href="{{ url_for('seller_campaign') }}"
+                    class="add-cart-btn"
+                >
+                    + New Campaign
+                </a>
+
+            </div>
+
+
+            {% if campaigns %}
+
+                {% for campaign in campaigns %}
+
+                <div class="campaign-card">
+
+                    <div class="campaign-header">
+
+                        <h3>
+                            {{ campaign['campaign_title'] }}
+                        </h3>
+
+                        <span>
+                            {{ campaign['platform'] }}
+                        </span>
+
+                    </div>
+
+
+                    <p>
+                        <strong>Product:</strong>
+                        {{ campaign['product_name'] }}
+                    </p>
+
+
+                    <p>
+                        <strong>Goal:</strong>
+                        {{ campaign['marketing_goal'] }}
+                    </p>
+
+
+                    <div class="campaign-content">
+
+                        <strong>
+                            Caption
+                        </strong>
+
+                        <p>
+                            {{ campaign['caption'] }}
+                        </p>
+
+
+                        <strong>
+                            Hashtags
+                        </strong>
+
+                        <p>
+                            {{ campaign['hashtags'] }}
+                        </p>
+
+
+                        <strong>
+                            Call to Action
+                        </strong>
+
+                        <p>
+                            {{ campaign['call_to_action'] }}
+                        </p>
+
+                    </div>
+
+                </div>
+
+                {% endfor %}
+
+            {% else %}
+
+                <div class="no-orders">
+
+                    <h3>
+                        No campaigns yet
+                    </h3>
+
+                    <p>
+                        Create your first digital marketing campaign.
+                    </p>
+
+                </div>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</body>
+</html>
