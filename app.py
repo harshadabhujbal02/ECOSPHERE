@@ -9,9 +9,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 app = Flask(__name__)
 app.secret_key = "ecospheresecretkey2026"
 
-from pathlib import Path
-BASE_DIR = Path(__file__).resolve().parent
-DATABASE = str(BASE_DIR / "database.db")
+DATABASE = "database.db"
 
 
 # ============================================================
@@ -281,121 +279,58 @@ def init_db():
 
         sample_products = [
             (
+                "Bamboo Toothbrush",
+                "Personal Care",
+                149.00,
+                "Eco-friendly bamboo toothbrush made from sustainable materials.",
+                92,
+                "https://images.unsplash.com/photo-1607613009820-a29f7bb81c04?auto=format&fit=crop&w=800&q=85",
+                95, 90, 95, 88, 92
+            ),
+            (
+                "Reusable Water Bottle",
+                "Kitchen",
+                499.00,
+                "Durable reusable water bottle designed to reduce single-use plastic.",
+                95,
+                "https://images.unsplash.com/photo-1602143407151-7111542de6e8?auto=format&fit=crop&w=800&q=85",
+                94, 96, 98, 90, 92
+            ),
+            (
                 "Organic Cotton Tote Bag",
                 "Bags",
-                799.00,
-                "Durable organic cotton tote for groceries, college and everyday sustainable shopping.",
-                88,
-                "/static/images/organic_cotton_tote_bag.jpg",
+                299.00,
+                "Reusable organic cotton tote bag for shopping and everyday use.",
+                94,
+                "https://images.unsplash.com/photo-1590874103328-eac38a683ce7?auto=format&fit=crop&w=800&q=85",
                 96, 94, 95, 90, 92
             ),
             (
-                "Recycled Paper Notebook",
-                "Stationery",
-                449.00,
-                "Minimal recycled-paper notebook for notes, journaling and creative ideas.",
-                95,
-                "/static/images/recycled_paper_notebook.jpg",
-                96, 98, 91, 94, 95
-            ),
-            (
-                "Bamboo Cutlery Set",
+                "Reusable Kitchen Set",
                 "Kitchen",
                 699.00,
-                "Reusable bamboo fork, spoon and knife set with a washable travel pouch.",
-                90,
-                "/static/images/bamboo_cutlery_set.jpg",
-                92, 91, 96, 90, 91
+                "Reusable kitchen essentials designed to replace disposable products.",
+                91,
+                "https://images.unsplash.com/photo-1556911220-e15b29be8c8f?auto=format&fit=crop&w=800&q=85",
+                90, 91, 94, 88, 92
             ),
             (
-                "Indoor Plant Starter Kit",
-                "Home & Garden",
-                549.00,
-                "Beginner-friendly indoor plant kit to bring a fresh green touch to your space.",
-                87,
-                "/static/images/indoor_plant_starter_kit.jpg",
-                89, 87, 92, 82, 86
-            ),
-            (
-                "Natural Soy Wax Candle",
-                "Home & Living",
-                399.00,
-                "Hand-poured soy wax candle with a clean, calming fragrance and reusable jar.",
+                "Natural Handmade Soap",
+                "Personal Care",
+                199.00,
+                "Natural handmade soap using skin-friendly and environmentally conscious ingredients.",
                 89,
-                "/static/images/natural_soy_wax_candle.jpg",
-                92, 90, 88, 87, 89
+                "https://images.unsplash.com/photo-1607006344380-b6775a0824b3?auto=format&fit=crop&w=800&q=85",
+                90, 88, 90, 87, 90
             ),
             (
-                "Reusable Produce Bags",
-                "Kitchen",
-                349.00,
-                "Lightweight washable mesh bags that make plastic-free fruit and vegetable shopping easy.",
-                94,
-                "/static/images/reusable_produce_bags.jpg",
-                95, 94, 98, 91, 92
-            ),
-            (
-                "Cork Desk Organizer",
+                "Eco-Friendly Notebook",
                 "Stationery",
-                649.00,
-                "Natural cork organizer for pens, cards and everyday desk essentials.",
-                86,
-                "/static/images/cork_desk_organizer.jpg",
-                90, 86, 90, 84, 85
-            ),
-            (
-                "Jute Shopping Bag", "Fashion", 249.00,
-                "Strong reusable jute shopping bag for groceries and everyday carrying.",
-                93, "/static/images/jute_bag.jpg",
-                95, 92, 96, 90, 91
-            ),
-            (
-                "Recycled Fabric Backpack", "Fashion", 1299.00,
-                "Durable everyday backpack made using recycled fabric for conscious travel and college use.",
-                91, "/static/images/recycled_fabric_backpack.jpg",
-                93, 96, 94, 88, 89
-            ),
-            (
-                "Plantable Seed Pencils – Set of 10", "Stationery", 199.00,
-                "Plantable pencils embedded with seeds that can grow into herbs or flowers after use.",
-                98, "/static/images/plantable_seed_pencils.jpg",
-                98, 99, 96, 97, 95
-            ),
-            (
-                "Terracotta Plant Pot", "Home & Garden", 299.00,
-                "Classic breathable terracotta pot for indoor plants, herbs and balcony gardening.",
-                93, "/static/images/terracotta_plant_pot.jpg",
-                96, 95, 92, 91, 90
-            ),
-            (
-                "Coconut Shell Planter", "Home & Garden", 399.00,
-                "Handcrafted coconut shell planter that gives natural waste material a second life.",
-                95, "/static/images/coconut_shell_planter.jpg",
-                98, 96, 94, 93, 91
-            ),
-            (
-                "Natural Loofah Bath Sponge", "Personal Care", 199.00,
-                "Plant-based natural loofah bath sponge for gentle exfoliation and plastic-free bathing.",
-                96, "/static/images/natural_loofah_body_scrubber.jpg",
-                97, 96, 95, 94, 93
-            ),
-            (
-                "Bamboo Storage Basket", "Home & Garden", 699.00,
-                "Handwoven bamboo storage basket for organizing home essentials with a natural look.",
-                92, "/static/images/bamboo_storage_basket.jpg",
-                94, 93, 94, 89, 90
-            ),
-            (
-                "Handmade Herbal Soap", "Personal Care", 149.00,
-                "Handmade herbal soap crafted with plant-based ingredients for a simple, gentle routine.",
-                94, "/static/images/handmade_herbal_soap.jpg",
-                95, 94, 90, 93, 91
-            ),
-            (
-                "Coconut Fiber Dish Scrubber", "Cleaning", 149.00,
-                "Biodegradable coconut-fiber scrubber for everyday dishwashing without plastic sponges.",
-                97, "/static/images/coconut_dish_scrubber.jpg",
-                98, 97, 96, 95, 94
+                179.00,
+                "Recycled-paper notebook suitable for college and everyday writing.",
+                93,
+                "https://images.unsplash.com/photo-1544816155-12df9643f363?auto=format&fit=crop&w=800&q=85",
+                94, 92, 90, 92, 95
             )
         ]
 
@@ -424,8 +359,8 @@ def init_db():
 # HOME PAGE
 # ============================================================
 
-@app.route("/")
-def home():
+@app.route("/", endpoint="index")
+def index():
 
     conn = get_db_connection()
 
@@ -442,6 +377,19 @@ def home():
         "index.html",
         products=products
     )
+
+
+# Keep the old endpoint name working for existing templates.
+app.add_url_rule("/", endpoint="home", view_func=index)
+
+
+# ============================================================
+# BLOG PAGE
+# ============================================================
+
+@app.route("/blog")
+def blog():
+    return render_template("blog.html")
 
 
 # ============================================================
@@ -519,11 +467,6 @@ def products():
         search=search,
         selected_category=category
     )
-
-
-@app.route("/blog")
-def blog():
-    return render_template("blog.html")
 
 
 # ============================================================
@@ -1434,12 +1377,15 @@ def seller_campaign():
 
 
 # ============================================================
-# APPLICATION START
+# INITIALIZE DATABASE
 # ============================================================
 
-# Initialize the database when the application starts
 init_db()
 
+
+# ============================================================
+# APPLICATION START
+# ============================================================
 
 if __name__ == "__main__":
 
