@@ -1459,3 +1459,205 @@ select {
 .quantity-controls span{min-width:20px;text-align:center;font-weight:700}
 @media(max-width:850px){.product-detail-container{grid-template-columns:1fr}.product-detail-image{position:static}.product-detail-image img{height:420px}.cart-layout{grid-template-columns:1fr}.cart-summary{position:static}}
 @media(max-width:560px){.product-detail-info{padding:22px}.product-detail-info h1{font-size:31px}.product-detail-image img{height:330px}.product-actions,.home-product-actions{grid-template-columns:1fr}.product-actions .add-cart-form,.product-actions .view-details-btn{grid-column:1}}
+
+
+/* =========================================================
+   BLOG PAGE
+   ========================================================= */
+
+.blog-hero {
+    background: var(--light-green);
+    padding: 80px 20px;
+    text-align: center;
+    border-bottom: 1px solid var(--border);
+}
+
+.blog-hero-content {
+    max-width: 850px;
+    margin: 0 auto;
+}
+
+.blog-label {
+    display: inline-block;
+    margin-bottom: 18px;
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.blog-hero h1 {
+    margin: 0 auto 20px;
+    color: var(--dark-green);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 48px;
+    line-height: 1.15;
+}
+
+.blog-hero p {
+    max-width: 700px;
+    margin: 0 auto;
+    color: var(--muted);
+    font-size: 17px;
+    line-height: 1.8;
+}
+
+.blog-container {
+    width: 100%;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 70px 20px;
+}
+
+.blog-article {
+    width: 100%;
+}
+
+.blog-intro {
+    margin-bottom: 55px;
+    color: var(--text);
+    font-size: 19px;
+    line-height: 1.9;
+    font-weight: 500;
+}
+
+.blog-section {
+    position: relative;
+    margin-bottom: 55px;
+    padding: 32px;
+    background: var(--white);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(32, 61, 43, 0.06);
+}
+
+.blog-number {
+    display: inline-block;
+    margin-bottom: 12px;
+    color: var(--green);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+.blog-section h2 {
+    margin: 0 0 14px;
+    color: var(--dark-green);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 29px;
+}
+
+.blog-section p {
+    margin: 0 0 20px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.blog-product-link {
+    display: inline-block;
+    color: var(--green);
+    font-size: 14px;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.blog-product-link:hover {
+    text-decoration: underline;
+}
+
+.blog-conclusion {
+    margin-top: 70px;
+    padding: 45px;
+    background: var(--soft-green);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+}
+
+.blog-conclusion h2 {
+    margin-top: 0;
+    color: var(--dark-green);
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 32px;
+}
+
+.blog-conclusion p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.blog-cta {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 13px 22px;
+    background: var(--green);
+    color: var(--white);
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+}
+
+.blog-cta:hover {
+    background: var(--dark-green);
+}
+
+.blog-footer {
+    margin-top: 40px;
+    padding: 45px 20px;
+    background: var(--dark-green);
+    text-align: center;
+}
+
+.blog-footer-brand {
+    color: var(--white);
+    font-size: 22px;
+    font-weight: 800;
+}
+
+.blog-footer p {
+    margin: 8px 0;
+    color: #dce7dd;
+    font-size: 14px;
+}
+
+
+/* =========================================================
+   BLOG RESPONSIVE DESIGN
+   ========================================================= */
+
+@media (max-width: 768px) {
+
+    .blog-hero {
+        padding: 55px 18px;
+    }
+
+    .blog-hero h1 {
+        font-size: 35px;
+    }
+
+    .blog-hero p {
+        font-size: 15px;
+    }
+
+    .blog-container {
+        padding: 45px 15px;
+    }
+
+    .blog-intro {
+        font-size: 17px;
+    }
+
+    .blog-section {
+        padding: 25px;
+    }
+
+    .blog-section h2 {
+        font-size: 25px;
+    }
+
+    .blog-conclusion {
+        padding: 30px 24px;
+    }
+
+}
