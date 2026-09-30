@@ -1,2 +1,4 @@
 User-agent: *
 Allow: /
+
+Sitemap: https://ecosphere-ktyr.onrender.com/sitemap.xml
