@@ -404,6 +404,54 @@ def robots_txt():
     )
 
 # ============================================================
+# SITEMAP.XML
+# ============================================================
+
+@app.route("/sitemap.xml")
+def sitemap():
+
+    site_url = "https://ecosphere-ktyr.onrender.com"
+
+    urls = [
+        f"{site_url}/",
+        f"{site_url}/blog",
+        f"{site_url}/products"
+    ]
+
+    # Add all public product detail pages
+    conn = get_db_connection()
+
+    products_list = conn.execute("""
+        SELECT id
+        FROM products
+        ORDER BY id
+    """).fetchall()
+
+    conn.close()
+
+    for product in products_list:
+        urls.append(
+            f"{site_url}/product/{product['id']}"
+        )
+
+    # Build XML sitemap
+    xml = """<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+"""
+
+    for url in urls:
+        xml += f"""    <url>
+        <loc>{url}</loc>
+    </url>
+"""
+
+    xml += """</urlset>"""
+
+    return xml, 200, {
+        "Content-Type": "application/xml; charset=utf-8"
+    }
+
+# ============================================================
 # PRODUCTS PAGE
 # ============================================================
 
