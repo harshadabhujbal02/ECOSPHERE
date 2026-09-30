@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, send_from_directory
 import sqlite3
 from werkzeug.security import generate_password_hash, check_password_hash
 
@@ -391,6 +391,17 @@ app.add_url_rule("/", endpoint="home", view_func=index)
 def blog():
     return render_template("blog.html")
 
+# ============================================================
+# ROBOTS.TXT
+# ============================================================
+
+@app.route("/robots.txt")
+def robots_txt():
+    return send_from_directory(
+        app.static_folder,
+        "robots.txt",
+        mimetype="text/plain"
+    )
 
 # ============================================================
 # PRODUCTS PAGE
