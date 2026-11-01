@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Login | EcoSphere</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+
+<div class="auth-page">
+
+    <div class="auth-card">
+
+        <div class="brand auth-brand">
+
+            <span class="brand-leaf">
+                🌱
+            </span>
+
+            <div>
+
+                <div class="brand-name">
+                    EcoSphere
+                </div>
+
+                <div class="brand-tagline">
+                    Choose Green. Live Better.
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <p class="section-label">
+            WELCOME BACK
+        </p>
+
+        <h1>
+            Login
+        </h1>
+
+
+        {% if error %}
+
+            <div class="form-error">
+                {{ error }}
+            </div>
+
+        {% endif %}
+
+
+        <form method="POST">
+
+            <label>
+                Email
+            </label>
+
+            <input
+                type="email"
+                name="email"
+                required
+            >
+
+
+            <label>
+                Password
+            </label>
+
+            <input
+                type="password"
+                name="password"
+                required
+            >
+
+
+            <button type="submit">
+                Login
+            </button>
+
+        </form>
+
+
+        <p class="auth-footer">
+
+            Don't have an account?
+
+            <a href="{{ url_for('register') }}">
+                Create Account
+            </a>
+
+        </p>
+
+    </div>
+
+</div>
+
+
+</body>
+</html>

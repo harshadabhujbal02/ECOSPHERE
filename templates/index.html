@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>EcoSphere | Sustainable Marketplace</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+
+<body>
+
+<!-- ================= NAVBAR ================= -->
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <span class="brand-leaf">🌱</span>
+
+        <div>
+            <div class="brand-name">EcoSphere</div>
+            <div class="brand-tagline">Choose Green. Live Better.</div>
+        </div>
+
+    </div>
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('products') }}">Products</a>
+
+        {% if session.get('user_id') %}
+            <a href="{{ url_for('recommendations') }}">For You</a>
+        {% endif %}
+
+        <a href="{{ url_for('cart') }}" class="cart-link">
+            🛒 Cart
+        </a>
+
+        {% if session.get('user_id') %}
+
+            <span class="welcome-user">
+                👤 {{ session.get('user_name') }}
+            </span>
+
+            <a href="{{ url_for('logout') }}" class="login-btn">
+                Logout
+            </a>
+
+        {% else %}
+
+            <a href="{{ url_for('login') }}" class="login-btn">
+                Login
+            </a>
+
+        {% endif %}
+
+    </div>
+
+</nav>
+
+
+<!-- ================= HERO ================= -->
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="hero-small">
+            SUSTAINABLE LIVING STARTS HERE
+        </p>
+
+        <h1>
+            Shop Better.<br>
+            <span>Live Greener.</span>
+        </h1>
+
+        <p>
+            Discover sustainable products designed to make
+            everyday choices better for you and the planet.
+        </p>
+
+        <a href="{{ url_for('products') }}" class="hero-btn">
+            Explore Products
+        </a>
+
+    </div>
+
+</section>
+
+
+<!-- ================= FEATURED PRODUCTS ================= -->
+
+<section class="section">
+
+    <div class="section-heading">
+
+        <div>
+            <p class="section-label">FEATURED</p>
+
+            <h2>
+                Sustainable choices for everyday life
+            </h2>
+        </div>
+
+        <a href="{{ url_for('products') }}">
+            View all products →
+        </a>
+
+    </div>
+
+
+    <div class="product-grid">
+
+        {% for product in products %}
+
+        <div class="product-card">
+
+            <div class="product-image-wrapper">
+
+                <img
+                    src="{{ product['image'] }}"
+                    alt="{{ product['name'] }}"
+                    class="product-image"
+                >
+
+                <span class="eco-badge">
+                    EcoScore {{ product['ecoscore'] }}
+                </span>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <p class="product-category">
+                    {{ product['category'] }}
+                </p>
+
+                <h3>
+                    {{ product['name'] }}
+                </h3>
+
+                <p class="product-description">
+                    {{ product['description'] }}
+                </p>
+
+                <div class="product-bottom">
+
+                    <strong>
+                        ₹{{ "%.2f"|format(product['price']) }}
+                    </strong>
+
+                    <a
+                        href="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                        class="add-cart-btn"
+                    >
+                        🛒 Add to Cart
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+<!-- ================= ECO MESSAGE ================= -->
+
+<section class="eco-banner">
+
+    <div>
+
+        <p class="section-label">
+            WHY ECOSPHERE?
+        </p>
+
+        <h2>
+            Every purchase can make a difference.
+        </h2>
+
+        <p>
+            EcoSphere helps you discover products with
+            transparent EcoScores so you can make
+            more environmentally conscious choices.
+        </p>
+
+    </div>
+
+    <a href="{{ url_for('products') }}" class="hero-btn">
+        Start Shopping
+    </a>
+
+</section>
+
+
+<!-- ================= FOOTER ================= -->
+
+<footer class="footer">
+
+    <div class="brand">
+
+        <span class="brand-leaf">🌱</span>
+
+        <div>
+            <div class="brand-name">EcoSphere</div>
+            <div class="brand-tagline">
+                Choose Green. Live Better.
+            </div>
+        </div>
+
+    </div>
+
+    <p>
+        © 2026 EcoSphere. Sustainable choices for a better future.
+    </p>
+
+</footer>
+
+</body>
+</html>

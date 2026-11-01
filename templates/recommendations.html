@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>
+        Recommendations | EcoSphere
+    </title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <span class="brand-leaf">🌱</span>
+
+        <div>
+            <div class="brand-name">EcoSphere</div>
+            <div class="brand-tagline">
+                Choose Green. Live Better.
+            </div>
+        </div>
+
+    </div>
+
+
+    <div class="nav-links">
+
+        <a href="{{ url_for('home') }}">Home</a>
+
+        <a href="{{ url_for('products') }}">Products</a>
+
+        <a href="{{ url_for('recommendations') }}">
+            For You
+        </a>
+
+        <a href="{{ url_for('cart') }}"
+           class="cart-link">
+            🛒 Cart
+        </a>
+
+        <span class="welcome-user">
+            👤 {{ session.get('user_name') }}
+        </span>
+
+        <a href="{{ url_for('logout') }}"
+           class="login-btn">
+            Logout
+        </a>
+
+    </div>
+
+</nav>
+
+
+<section class="page-header">
+
+    <p class="section-label">
+        PERSONALIZED
+    </p>
+
+    <h1>
+        Products For You
+    </h1>
+
+    <p>
+        Tell us what interests you and discover suitable
+        sustainable products.
+    </p>
+
+</section>
+
+
+<section class="recommendation-preference">
+
+    <form method="POST">
+
+        <label>
+            Choose your preferred category
+        </label>
+
+        <select name="category">
+
+            <option value="">
+                Select Category
+            </option>
+
+            {% for category in categories %}
+
+                <option
+                    value="{{ category }}"
+                    {% if preferred_category == category %}
+                        selected
+                    {% endif %}
+                >
+                    {{ category }}
+                </option>
+
+            {% endfor %}
+
+        </select>
+
+        <button type="submit">
+            Show Recommendations
+        </button>
+
+    </form>
+
+</section>
+
+
+<section class="section">
+
+    <div class="product-grid">
+
+        {% for product in products %}
+
+        <div class="product-card">
+
+            <div class="product-image-wrapper">
+
+                <img
+                    src="{{ product['image'] }}"
+                    alt="{{ product['name'] }}"
+                    class="product-image"
+                >
+
+                <span class="eco-badge">
+                    EcoScore {{ product['ecoscore'] }}
+                </span>
+
+            </div>
+
+
+            <div class="product-info">
+
+                <p class="product-category">
+                    {{ product['category'] }}
+                </p>
+
+                <h3>
+                    {{ product['name'] }}
+                </h3>
+
+                <p class="product-description">
+                    {{ product['description'] }}
+                </p>
+
+
+                <div class="product-bottom">
+
+                    <strong>
+                        ₹{{ "%.2f"|format(product['price']) }}
+                    </strong>
+
+                    <a
+                        href="{{ url_for('add_to_cart', product_id=product['id']) }}"
+                        class="add-cart-btn"
+                    >
+                        🛒 Add to Cart
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        {% endfor %}
+
+    </div>
+
+</section>
+
+
+</body>
+</html>

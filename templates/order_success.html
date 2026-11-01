@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Order Successful | EcoSphere</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/style.css') }}">
+
+</head>
+
+<body>
+
+
+<nav class="navbar">
+
+    <div class="brand">
+
+        <span class="brand-leaf">🌱</span>
+
+        <div>
+            <div class="brand-name">EcoSphere</div>
+            <div class="brand-tagline">
+                Choose Green. Live Better.
+            </div>
+        </div>
+
+    </div>
+
+</nav>
+
+
+<section class="success-page">
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <p class="section-label">
+            ORDER CONFIRMED
+        </p>
+
+        <h1>
+            Thank You for Shopping Sustainably!
+        </h1>
+
+        <p class="success-message">
+            Your order has been successfully placed.
+        </p>
+
+
+        <div class="order-number">
+
+            Order #{{ order['id'] }}
+
+        </div>
+
+
+        <div class="success-details">
+
+            <div>
+
+                <span>Status</span>
+
+                <strong>
+                    {{ order['status'] }}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>Total</span>
+
+                <strong>
+                    ₹{{ "%.2f"|format(order['total_amount']) }}
+                </strong>
+
+            </div>
+
+
+            <div>
+
+                <span>Payment</span>
+
+                <strong>
+                    {{ order['payment_method'] }}
+                </strong>
+
+            </div>
+
+        </div>
+
+
+        <div class="success-actions">
+
+            <a
+                href="{{ url_for('orders') }}"
+                class="success-primary-btn"
+            >
+                View My Orders
+            </a>
+
+            <a
+                href="{{ url_for('products') }}"
+                class="success-secondary-btn"
+            >
+                Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+</body>
+</html>
